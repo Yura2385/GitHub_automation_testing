@@ -1,6 +1,5 @@
 import pytest
 
-# fixtures are the functions that can be run before the actual test
 
 @pytest.mark.check
 def test_change_name(user):
