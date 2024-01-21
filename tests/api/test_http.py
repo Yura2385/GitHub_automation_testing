@@ -14,11 +14,11 @@ def test_second_request():
     headers = r.headers
 
     assert body['name'] == 'Chris Wanstrath' # - verifies if this key-value pair: 'name': 'Chris Wanstrath' present in the body
-    # print(f"Response Body is {r.json()}") - just prints entire body 
+    # print(f"Response Body is {r.json()}") # - just prints entire body 
     assert r.status_code == 200
-    # print(f"Response Status code is {r.status_code}") - just prints the status code 
+    # print(f"Response Status code is {r.status_code}") # - just prints the status code 
     assert headers['Server'] == 'GitHub.com'
-    # print(f"Response Headers are {r.headers}") - just prints the headers
+    # print(f"Response Headers are {r.headers}") # - just prints the headers
 
 
 @pytest.mark.http 
