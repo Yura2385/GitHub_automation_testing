@@ -74,7 +74,7 @@ def test_verify_sha(github_api):
 @pytest.mark.api 
 def test_verify_status_not_found_non_existing_user(github_api):
     r = github_api.get_commits_list("octoca12", "Hello-World")
-    print(r)
-    #assert r.status_code == 404
+    #print(r)
+    assert r.status_code == 404
 
 
