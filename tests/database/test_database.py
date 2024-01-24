@@ -73,9 +73,9 @@ def test_detailed_orders():
     orders = db.get_detailed_orders()
     print("Order details:", orders)
     # check quantity of orders equal to 1
-    assert len(orders) == 1
+    assert len(orders) == 5
 
-    # check structure od data
+    # check structure ord data
     assert orders[0][0] == 1
     assert orders[0][1] == "Sergii"
     assert orders[0][2] == "солодка вода"
@@ -93,18 +93,19 @@ def test_order_insert():
 
 
  # test #10
+@pytest.mark.database    
 def test_get_order_by_id():
     db = Database()
     order = db.select_order_by_id(2)
 
-    print(order)
+    assert order [0][1] == '12:28:03'
 
 
-
+ # test #11
 @pytest.mark.database
 def test_check_last_order():
     db = Database()
     last_order = db.select_last_order()
 
-    print(last_order)
+    assert last_order [0][1] == '13:15:27'
 
