@@ -13,6 +13,13 @@ class Database():
         record = self.cursor.fetchall() # get result of the query
         print(f"Connected succesfully. SQLite Database Version is: {record}")
 
+
+    def get_all_records_any_table(self, t_name):
+        query = f"SELECT * FROM '{t_name}'"
+        self.cursor.execute(query) # execute query in db
+        record = self.cursor.fetchall() # save the result of the query
+        return record
+
     
     def get_all_users(self):
         query = "SELECT name, address, city FROM customers"
@@ -47,6 +54,13 @@ class Database():
         self.cursor.execute(query)
         self.connection.commit() # confirmation of changes in db to prevent any updates by mistake
 
+
+    def insert_order(self, id, customer_id, product_id, order_date):
+        query = f"INSERT OR REPLACE INTO orders (id, customer_id, product_id, order_date) \
+        VALUES ({id}, '{customer_id}', '{product_id}', '{order_date}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
     
     def delete_product_by_id(self, product_id):
         query = f"DELETE FROM products WHERE id = {product_id}"
@@ -54,7 +68,7 @@ class Database():
         self.connection.commit()
 
 
-    def get_detailed_orders(self)    :
+    def get_detailed_orders(self):
         query = "SELECT orders.id, customers.name, products.name,  \
             products.description, orders.order_date \
             FROM orders \
@@ -64,3 +78,18 @@ class Database():
         record = self.cursor.fetchall() # save result of the query in record variable
         return record
     
+    def select_order_by_id(self, id):
+        query = f"SELECT id, order_date FROM orders WHERE id = {id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall() # save the result of the query
+        return record
+    
+
+    def select_last_order(self):
+        query = f"SELECT id, order_date FROM orders \
+            ORDER by id DESC \
+            LIMIT 1"
+        self.cursor.execute(query)
+        last_order = self.cursor.fetchall() # save the result of the query
+
+        return last_order

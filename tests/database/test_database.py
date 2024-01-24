@@ -15,19 +15,27 @@ def test_check_all_users():
 
     print (users)
 
- # test #3
+ # test #3 
+@pytest.mark.database
+def test_print_entire_table():
+    db = Database()
+    users = db.get_all_records_any_table("orders")
+
+    print(users)
+
+
+ # test #4
 @pytest.mark.database
 def test_check_user_sergii():
     db = Database()
     user = db.get_user_address_by_name("Sergii")
 
-    assert user[0][0] == "Maydan Nezalezhnosti 1"
+    assert user[0][0] == "Maydan Nezalezhnosti 1" # values stored as a list, first row is 0, then goes columns.
     assert user[0][1] == "Kyiv"
     assert user[0][2] == "3127"
     assert user[0][3] == "Ukraine"
 
-
- # test #4 
+ # test #5 
 @pytest.mark.database
 def test_product_qnt_update():
     db = Database()
@@ -37,18 +45,17 @@ def test_product_qnt_update():
     assert water_qnt[0][0] == 25 # verifies that quantity equal to the value that we provided
 
 
- # test #5
+ # test #6
 @pytest.mark.database
 def test_product_insert():
     db = Database()
     db.insert_product(4, 'печиво', 'солодке', 30)
     cookie_qnt = db.select_product_qnt_by_id(4)
 
-    assert cookie_qnt[0][0] == 30 # verifies that quantity equal to the value that we provided
+    assert cookie_qnt[0][0] == 30 
 
 
-
- # tests #5
+ # tests #7
 @pytest.mark.database
 def test_product_delete():
     db = Database()
@@ -59,7 +66,7 @@ def test_product_delete():
     assert len(qnt) == 0 # confirm that test data doesn't exist in the table
 
 
-# test #6
+# test #8
 @pytest.mark.database
 def test_detailed_orders():
     db = Database()
@@ -73,3 +80,31 @@ def test_detailed_orders():
     assert orders[0][1] == "Sergii"
     assert orders[0][2] == "солодка вода"
     assert orders[0][3] == "з цукром"
+
+
+ # test #9
+@pytest.mark.database    
+def test_order_insert():
+    db = Database()
+    db.insert_order(6, 1, 2, "13:15:27")
+    cust_id = db.select_last_order()
+
+    assert cust_id[0][1] == "13:15:27"
+
+
+ # test #10
+def test_get_order_by_id():
+    db = Database()
+    order = db.select_order_by_id(2)
+
+    print(order)
+
+
+
+@pytest.mark.database
+def test_check_last_order():
+    db = Database()
+    last_order = db.select_last_order()
+
+    print(last_order)
+
