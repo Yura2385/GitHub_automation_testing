@@ -48,6 +48,13 @@ class Database():
         return record
     
 
+    def negative_update_product_qnt_by_id_using_str(self, product_id, qnt): 
+        #  quantity column in products table is set to accept only int values
+        query = f"UPDATE products SET quantity = '{qnt}' WHERE id = {product_id}"
+        self.cursor.execute(query)
+        self.connection.commit() 
+    
+
     def insert_product(self, product_id, name, description, qnt):
         query = f"INSERT OR REPLACE INTO products (id, name, description, quantity) \
         VALUES ({product_id}, '{name}', '{description}', {qnt})"
@@ -91,5 +98,15 @@ class Database():
             LIMIT 1"
         self.cursor.execute(query)
         last_order = self.cursor.fetchall() # save the result of the query
+
+        return last_order
+    
+    def select_specific_range_order_date_for_users(self, tm):
+        query = f"SELECT customers.name, orders.id, orders.order_date \
+            FROM customers \
+            JOIN orders ON customers.id = orders.customer_id \
+            WHERE order_date >= '{tm}'"
+        self.cursor.execute(query)
+        last_order = self.cursor.fetchall()
 
         return last_order

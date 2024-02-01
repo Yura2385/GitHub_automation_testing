@@ -19,7 +19,7 @@ def test_check_all_users():
 @pytest.mark.database
 def test_print_entire_table():
     db = Database()
-    users = db.get_all_records_any_table("orders")
+    users = db.get_all_records_any_table("products")
 
     print(users)
 
@@ -66,14 +66,14 @@ def test_product_delete():
     assert len(qnt) == 0 # confirm that test data doesn't exist in the table
 
 
-# test #8
+ # test #8
 @pytest.mark.database
 def test_detailed_orders():
     db = Database()
     orders = db.get_detailed_orders()
-    print("Order details:", orders)
+    print("Orders details:", orders)
     # check quantity of orders equal to 1
-    assert len(orders) == 5
+    assert len(orders) == 6
 
     # check structure ord data
     assert orders[0][0] == 1
@@ -86,10 +86,10 @@ def test_detailed_orders():
 @pytest.mark.database    
 def test_order_insert():
     db = Database()
-    db.insert_order(6, 1, 2, "13:15:27")
+    db.insert_order(6, 2, 1, "14:02:47")
     cust_id = db.select_last_order()
 
-    assert cust_id[0][1] == "13:15:27"
+    assert cust_id[0][1] == "14:02:47"
 
 
  # test #10
@@ -98,7 +98,7 @@ def test_get_order_by_id():
     db = Database()
     order = db.select_order_by_id(2)
 
-    assert order [0][1] == '12:28:03'
+    assert order [0][1] == "12:28:03"
 
 
  # test #11
@@ -107,5 +107,39 @@ def test_check_last_order():
     db = Database()
     last_order = db.select_last_order()
 
-    assert last_order [0][1] == '13:15:27'
+    assert last_order [0][1] == "14:02:47"
 
+
+ # test #12
+@pytest.mark.database
+def test_get_order_date_after_specific_time_point():
+    db = Database()
+    orders = db.select_specific_range_order_date_for_users("13:10:00")
+
+    #print(orders)
+    assert orders[0][2] >= "13:10:00"
+
+
+ # test #13
+@pytest.mark.database
+def test_product_qnt_update_with_wrong_value_type():  
+    # negative test to verify that int can not by updated by str
+    db = Database()
+    db.negative_update_product_qnt_by_id_using_str(1, "A") # updating quantity
+    water_qnt = db.select_product_qnt_by_id(1) # get the quantity of the item
+
+    print(water_qnt)
+
+    assert water_qnt[0][0] == "A" # verifies that quantity equal to the value that we provided
+
+
+ # test #14
+@pytest.mark.database
+def test_check_data_type_of_value_in_qnt_column(): 
+    db = Database()
+    quantity_value = db.select_product_qnt_by_id(1)
+    data_type = quantity_value[0][0]
+    
+    #print(data_type)
+    print(type(data_type))
+    assert isinstance(data_type, int) # The data type of the quantity value is checked using the 'isinstance' 
