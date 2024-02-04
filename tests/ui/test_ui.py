@@ -19,6 +19,7 @@ def test_check_incorrect_username():
 
      # Enter invalid user credentials
     login_elem.send_keys("sergiibutenkomistakeinemail.com")
+    # time.sleep(2)  # stops the execution for 2 sec
     
      # Find input field - Password to type in invalid user credentials
     pass_elem = driver.find_element(By.ID, "password")
@@ -34,6 +35,6 @@ def test_check_incorrect_username():
 
      # Verify page title
     assert driver.title == "Sign in to GitHub · GitHub"
-
+    
      # Close webbrowser
     driver.close()

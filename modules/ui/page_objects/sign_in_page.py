@@ -30,6 +30,10 @@ class SignInPage(BasePage):
         # Click Sign In btn
         btn_elem.click()
 
+    def check_close_button_on_warning_pop_up(self, expected_text):
+        alert_text = self.driver.find_element(By.CLASS_NAME, 'js-flash-alert')
+        return alert_text.text.strip() # retrives text of the element and removes leading and trailing whitespaces 
+
     def check_title(self, expected_title):
         return self.driver.title == expected_title
     

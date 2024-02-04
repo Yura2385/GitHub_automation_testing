@@ -13,10 +13,13 @@ def test_check_incorect_username_page_object():
 
      # trying to sing in
     sign_in_page.try_login("page_object@gmail.com", "wrong password")
-
+    
      # verift page title
     assert sign_in_page.check_title("Sign in to GitHub · GitHub")
     #time.sleep(2)
 
+     # verify text of the warning popup
+    assert sign_in_page.check_close_button_on_warning_pop_up("Incorrect username or password.")
+    
      # Close browser
     sign_in_page.close()
