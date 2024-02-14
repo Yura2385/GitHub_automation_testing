@@ -54,7 +54,7 @@ def test_verify_particular_emoji_not_exists(github_api): #  verifies that listed
  #  test #8
 @pytest.mark.api 
 def test_verify_status_code(github_api):
-    r = github_api.get_commits_list("octocat", "Hello-World")
+    r = github_api.get_body_of_commits_list("octocat", "Hello-World")
     #print(r)
     #body = r.json()
     #headers = r.headers
@@ -64,7 +64,7 @@ def test_verify_status_code(github_api):
 #  test #9
 @pytest.mark.api 
 def test_verify_sha(github_api):
-    r = github_api.get_commits_list("octocat", "Hello-World")
+    r = github_api.get_body_of_commits_list("octocat", "Hello-World")
     #print(r)
     body = r.json() #  converts response JSON (body) into a Python list
     assert body[0]["sha"] == "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d"

@@ -98,7 +98,7 @@ def test_get_order_by_id():
     db = Database()
     order = db.select_order_by_id(2)
 
-    assert order [0][1] == "12:28:03"
+    assert order[0][1] == "12:28:03"
 
 
  # test #11
@@ -107,7 +107,7 @@ def test_check_last_order():
     db = Database()
     last_order = db.select_last_order()
 
-    assert last_order [0][1] == "14:02:47"
+    assert last_order[0][1] == "14:02:47"
 
 
  # test #12
@@ -116,7 +116,6 @@ def test_get_order_date_after_specific_time_point():
     db = Database()
     orders = db.select_specific_range_order_date_for_users("13:10:00")
 
-    #print(orders)
     assert orders[0][2] >= "13:10:00"
 
 
@@ -129,7 +128,6 @@ def test_product_qnt_update_with_wrong_value_type():
     water_qnt = db.select_product_qnt_by_id(1) # get the quantity of the item
 
     print(water_qnt)
-
     assert water_qnt[0][0] == "A" # verifies that quantity equal to the value that we provided
 
 
@@ -140,6 +138,6 @@ def test_check_data_type_of_value_in_qnt_column():
     quantity_value = db.select_product_qnt_by_id(1)
     data_type = quantity_value[0][0]
     
-    #print(data_type)
     print(type(data_type))
-    assert isinstance(data_type, int) # The data type of the quantity value is checked using the 'isinstance' 
+    # The data type of the quantity value is checked using the 'isinstance' 
+    assert isinstance(data_type, int) 

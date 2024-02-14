@@ -16,10 +16,9 @@ def test_check_incorect_username_page_object():
     
      # verift page title
     assert sign_in_page.check_title("Sign in to GitHub · GitHub")
-    #time.sleep(2)
 
      # verify text of the warning popup
-    assert sign_in_page.check_close_button_on_warning_pop_up("Incorrect username or password.")
+    assert sign_in_page.get_text_of_close_button_on_warning_pop_up("Incorrect username or password.")
     
      # Close browser
     sign_in_page.close()
